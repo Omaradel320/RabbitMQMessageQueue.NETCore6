@@ -1,65 +1,52 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RabbitMqProductAPI.Dtos;
-using RabbitMqProductAPI.Models;
-using RabbitMqProductAPI.RabbitMQ;
-using RabbitMqProductAPI.Services.Products;
+﻿using RabbitMqProductAPI.Resources.Products.Commands.Create;
+using RabbitMqProductAPI.Resources.Products.Commands.Update;
 
 namespace RabbitMqProductAPI.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class ProductController : ControllerBase
 {
-    private readonly IRabbitMQProducer _rabbitMqProducer;
-    private readonly IProductService _productService;
-    public ProductController(IRabbitMQProducer rabbitMqProducer, IProductService productService)
+    private readonly IMediator _mediator;
+    public ProductController(IMediator mediator)
     {
-        _rabbitMqProducer = rabbitMqProducer;
-        _productService = productService;
+        _mediator = mediator;
     }
 
     [HttpGet("GetAllProducts")]
-    public async Task<IEnumerable<Product>> GetAllProducts()
+    public async Task<IActionResult> GetAllProducts()
     {
-        var productList = await _productService.GetAllProductsAsync();
-
-        _rabbitMqProducer.SendProductMessage(productList);
-
-        return productList;
+        var productList = await _mediator.Send(new GetAllProductsQuery());
+        return Ok(productList);
     }
+
     [HttpGet("GetProductById")]
-    public async Task<Product> GetProductById(int Id)
+    public async Task<ProductDto> GetProductById(int Id)
     {
-        var product = await _productService.GetProductByIdAsync(Id);
-
-        _rabbitMqProducer.SendProductMessage(product);
-
+        var product = await _mediator.Send(new GetProductByIdQuery { Id = Id });
         return product;
     }
+
     [HttpPost("AddNewProduct")]
-    public async Task<Product> AddNewProduct(AddProductDto dto)
+    public async Task<ProductDto> AddNewProduct(AddProductCommand dto)
     {
-        var product = await _productService.AddProductAsync(dto);
-
-        _rabbitMqProducer.SendProductMessage(product);
-
+        var product = await _mediator.Send(dto);
         return product;
     }
+
     [HttpPost("UpdateProduct")]
-    public async Task<Product> UpdateProduct(UpdateProductDto dto)
+    public async Task<ProductDto> UpdateProduct(UpdateProductCommand dto)
     {
-        var updateProduct = await _productService.UpdateProductAsync(dto);
-
-        _rabbitMqProducer.SendProductMessage(updateProduct);
-
-        return updateProduct;
+        var updatedProduct = await _mediator.Send(dto);
+        return new ProductDto();
     }
-    [HttpPost("DeleteProduct")]
-    public async Task<Product> UpdateProduct(int Id)
-    {
-        var deletedProduct = await _productService.DeleteProductAsync(Id);
 
-        _rabbitMqProducer.SendProductMessage(deletedProduct);
+    //[HttpPost("DeleteProduct")]
+    //public async Task<Product> UpdateProduct(int Id)
+    //{
+    //    var deletedProduct = await _productService.DeleteProductAsync(Id);
 
-        return deletedProduct;
-    }
+    //    _rabbitMqProducer.SendProductMessage(deletedProduct);
+
+    //    return deletedProduct;
+    //}
 }
