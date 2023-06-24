@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqProducerAPI", "RabbitMqProductAPI\RabbitMqProducerAPI.csproj", "{DC5F4595-D669-4ED9-A2A2-5C60CD4985EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqProductAPI", "RabbitMqProductAPI\RabbitMqProductAPI.csproj", "{DC5F4595-D669-4ED9-A2A2-5C60CD4985EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQConsumerApp", "RabbitMQConsumerApp\RabbitMQConsumerApp.csproj", "{A9B35693-4C13-4D2F-9FD2-16EF2B97D98B}"
 EndProject

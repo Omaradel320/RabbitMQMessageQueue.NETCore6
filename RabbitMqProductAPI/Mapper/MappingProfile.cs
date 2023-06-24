@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using RabbitMqProductAPI.Dtos;
-using RabbitMqProductAPI.Models;
+﻿using RabbitMqProductAPI.Resources.Products.Commands.Create;
+using RabbitMqProductAPI.Resources.Products.Commands.Update;
 
 namespace RabbitMqProductAPI.Mapper;
 
@@ -8,7 +7,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<AddProductDto,Product>().ReverseMap();
-        CreateMap<UpdateProductDto, Product>().ReverseMap();
+        CreateMap<ProductDto, Product>().ReverseMap();
+        CreateMap<AddProductCommand, Product>().ReverseMap();
+        CreateMap<UpdateProductCommand, Product>().ReverseMap();
     }
 }

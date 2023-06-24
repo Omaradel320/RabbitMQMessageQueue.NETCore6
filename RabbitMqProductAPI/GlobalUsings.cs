@@ -1,0 +1,10 @@
+﻿global using MediatR;
+global using RabbitMqProductAPI.Models;
+global using RabbitMqProductAPI.Data;
+global using RabbitMqProductAPI.Mapper;
+global using RabbitMqProductAPI.RabbitMQ;
+global using Microsoft.EntityFrameworkCore;
+global using RabbitMqProductAPI.Dtos;
+global using Microsoft.AspNetCore.Mvc;
+global using AutoMapper;
+global using RabbitMqProductAPI.Resources.Products.Queries;

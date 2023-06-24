@@ -26,7 +26,7 @@ consumer.Received += (model, eventArgs) =>
     var message = Encoding.UTF8.GetString(body);
     var messageObj = JsonConvert.DeserializeObject(message);
 
-    Console.WriteLine($"Product message received: {messageObj}");
+    Console.WriteLine($"\n\nProduct message received: {messageObj}\n\n");
 };
 //read the message
 channel.BasicConsume(queue: "product", autoAck: true, consumer: consumer);
