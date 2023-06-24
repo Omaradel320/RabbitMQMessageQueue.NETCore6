@@ -1,4 +1,5 @@
 ﻿using RabbitMqProductAPI.Resources.Products.Commands.Create;
+using RabbitMqProductAPI.Resources.Products.Commands.Delete;
 using RabbitMqProductAPI.Resources.Products.Commands.Update;
 
 namespace RabbitMqProductAPI.Controllers;
@@ -40,13 +41,10 @@ public class ProductController : ControllerBase
         return new ProductDto();
     }
 
-    //[HttpPost("DeleteProduct")]
-    //public async Task<Product> UpdateProduct(int Id)
-    //{
-    //    var deletedProduct = await _productService.DeleteProductAsync(Id);
-
-    //    _rabbitMqProducer.SendProductMessage(deletedProduct);
-
-    //    return deletedProduct;
-    //}
+    [HttpPost("DeleteProduct")]
+    public async Task<ProductDto> DeleteProduct(int Id)
+    {
+        var deletedProduct = await _mediator.Send(new DeleteProductCommand { Id = Id });
+        return deletedProduct;
+    }
 }

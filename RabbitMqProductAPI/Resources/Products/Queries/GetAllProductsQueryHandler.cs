@@ -11,7 +11,7 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, I
         _mapper = mapper;
         _messageSender = messageSender;
     }
-    public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellatioToken)
+    public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
         var productList = await _DbContext.Products.Where(p => !p.IsDeleted).ToListAsync();
         var response = _mapper.Map<IEnumerable<ProductDto>>(productList);

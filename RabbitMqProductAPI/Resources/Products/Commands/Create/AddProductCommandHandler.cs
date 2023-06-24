@@ -1,4 +1,6 @@
-﻿namespace RabbitMqProductAPI.Resources.Products.Commands.Create;
+﻿using System.Threading;
+
+namespace RabbitMqProductAPI.Resources.Products.Commands.Create;
 public class AddProductCommandHandler : IRequestHandler<AddProductCommand, ProductDto>
 {
     private readonly IMapper _mapper;
@@ -11,7 +13,7 @@ public class AddProductCommandHandler : IRequestHandler<AddProductCommand, Produ
         _messageSender = messageSender;
     }
 
-    public async Task<ProductDto> Handle(AddProductCommand request, CancellationToken cancellatioToken)
+    public async Task<ProductDto> Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
         var newProduct = _mapper.Map<Product>(request);
         await _context.Products.AddAsync(newProduct);

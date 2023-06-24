@@ -13,7 +13,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
     }
     public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = _context.Products.FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
+        var product = _context.Products.FirstOrDefaultAsync(p => p.Id.Equals(request.Id), cancellationToken);
         var response = _mapper.Map<ProductDto>(product);
 
         _messageSender.SendProductMessage(response);
